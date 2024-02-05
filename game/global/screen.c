@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 23:16:20 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/05 16:15:40 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:05:30 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ void	screen_move(t_vars *vars)
 	t_entity	*entity;
 	t_axis		e_axis;
 	t_size		e_size;
-
+	
+	vars->win_move.x = 0;
+	vars->win_move.y = 0;
 	entity = ctrl_get(vars);
 	e_axis = entity->axis;
 	e_size = entity->size;

@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:47:01 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/05 15:50:14 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:29:04 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	game_init(t_vars *vars)
 	ground_init(vars);
 	player_init(vars);
 	spaceship_init(vars);
-	vars->target_FPS = 120;
-	vars->frame_time = 100000000LL / vars->target_FPS;
 }
 
 void	game_setup(t_vars *vars)
@@ -61,8 +59,6 @@ int game_render(void *void_vars)
 	entity_render(vars, &vars->player[0], vars->player_xpm);
 	entity_render(vars, &vars->spaceship[0], vars->spaceship_xpm);
 	fish_render(vars);
-	vars->win_move.x = 0;
-	vars->win_move.y = 0;
 	return (0);
 }
 

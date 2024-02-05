@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 06:38:48 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/05 14:05:59 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:18:26 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,6 @@ typedef struct s_ground
 	int		size;
 } t_ground;
 
-typedef struct s_star
-{
-	t_axis	axis;
-	t_img	img;
-} t_star;
-
 typedef struct s_home
 {
 	void	*mlx;
@@ -109,8 +103,6 @@ typedef struct s_vars
 	t_size			win_real;
 	t_axis			win_move;
 	t_axis			win_gap;
-	int				target_FPS;
-	long long		frame_time;
 
 	t_img			player_xpm[2];
 	t_entity		player[1];
