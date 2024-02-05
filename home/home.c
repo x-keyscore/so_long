@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:00:57 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/04 23:23:12 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:49:30 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ void	home_start(t_home *home)
 	mlx_hook(home->win, 2, 1L<<0, home_select, home);
 	mlx_hook(home->win, 17, 0L, home_close, home);
 	mlx_loop_hook(home->mlx, home_render, home);
-	mlx_loop(home->mlx);
+	mlx_loop(home->mlx, 60);
 }

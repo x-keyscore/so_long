@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 06:40:49 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/04 20:37:12 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 01:28:14 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ void    light_collision(t_vars *vars, t_axis axis, t_size size)
 
 void	light_render(t_vars *vars)
 {
+	t_size light;
 	int	count;
 	int	i;
 
+	light = vars->light_xpm[0].size;
 	count = 0;
 	i = vars->light_len;
 	while (--i > -1)
@@ -72,6 +74,8 @@ void	light_render(t_vars *vars)
 			 count++;
 		vars->light[i].axis.x += vars->win_move.x;
 		vars->light[i].axis.y += vars->win_move.y;
+		if (screen_in(vars->win_view, vars->light[i].axis.x, vars->light[i].axis.y, light.w, light.h))
+			continue ;
 		mlx_put_image_to_window(vars->mlx, vars->win, vars->light_xpm[vars->light[i].on_active].img, vars->light[i].axis.x, vars->light[i].axis.y);
 	}
 	if (count == vars->light_len && vars->ctrl_toggler)

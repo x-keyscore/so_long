@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 06:38:48 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/04 22:58:21 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 14:05:59 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "./minilibx-linux-v2/mlx.h"
 # include <time.h>
 # include <stdlib.h>
-#include <unistd.h>
+# include <unistd.h>
 # include <fcntl.h>
 
 # include <stdio.h> //delete
@@ -32,7 +32,7 @@
 # define BASE 64
 # define GRAVITY 1
 # define VELOCITY 1
-# define SLEEP_TIME 100//1500
+# define SLEEP_TIME 750//1500
 
 typedef struct s_axis
 {
@@ -109,6 +109,8 @@ typedef struct s_vars
 	t_size			win_real;
 	t_axis			win_move;
 	t_axis			win_gap;
+	int				target_FPS;
+	long long		frame_time;
 
 	t_img			player_xpm[2];
 	t_entity		player[1];
@@ -203,7 +205,8 @@ int		entity_move_right(t_vars *vars, t_entity *entity, t_size e_size);
 int		entity_move_gravity(t_vars *vars, t_entity *entity, t_size e_size);
 t_move	entity_move(t_vars *vars, t_entity *entity);
 
-void	screen_size(t_vars *vars, int w, int h);
+void	screen_set(t_vars *vars, int w, int h);
+int		screen_in(t_size win_view, int x, int y, int w, int h);
 void	screen_move(t_vars *vars);
 
 void	ctrl_handler(t_vars *vars, int state);

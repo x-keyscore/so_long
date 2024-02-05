@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 20:34:31 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/04 23:18:10 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 01:27:37 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	parser_start(t_vars *vars, char *map_path)
 	|| size.w < 6 || size.h < 4
 	|| size.w > 1500 || size.h > 1499)
 		err(vars, NULL, map, "Taille de map non valide.\n");
-	screen_size(vars, (size.w - 2) * BASE, (size.h - 2) * BASE);
+	screen_set(vars, (size.w - 2) * BASE, (size.h - 2) * BASE);
 	map_ground_border(vars, map, size);
 	map_ground_platform(vars, map, size);
 	map_fish(vars, map, size);

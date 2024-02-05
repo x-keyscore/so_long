@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:27:29 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/04 00:55:31 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 01:41:21 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ void	entity_render(t_vars *vars, t_entity *entity, t_img *xpm)
 		return ;
 	entity->axis.x += vars->win_move.x;
 	entity->axis.y += vars->win_move.y;
+	if (screen_in(vars->win_view, entity->axis.x, entity->axis.y, entity->size.w, entity->size.h))
+		return ;
 	mlx_put_image_to_window(vars->mlx, vars->win, xpm[entity->dir].img, entity->axis.x, entity->axis.y);
 }

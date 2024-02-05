@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:10:40 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/04 22:56:52 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 01:43:08 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,9 @@ void	fish_collision(t_vars *vars)
 
 void 	fish_render(t_vars *vars)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	while (vars->fish_len && i < vars->fish_len)
-	{
+	i = vars->fish_len;
+	while (--i > -1)
 		entity_render(vars, &vars->fish[i], vars->fish_xpm);
-		i++;
-	}
 }

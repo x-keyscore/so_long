@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 07:03:41 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/04 20:37:13 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/05 01:47:19 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ int	ground_collision(t_vars *vars, t_axis pos_1, int size_1_w, int size_1_h)
 
 void	ground_render(t_vars *vars)
 {
-	int		i;
-	int		i_grd;
-	int		i_img;
+	t_img	*xpm;
 	t_axis	axis;
-	t_size	size;
+	int		i_grd;
+	int		i_xpm;
+	int		i;
 
-	size = vars->ground_xpm[0].size;
-	i_img = 0;
+	xpm = vars->ground_xpm;
+	i_xpm = 0;
 	i = vars->ground_len;
 	while (--i > -1)
 	{
@@ -90,9 +90,14 @@ void	ground_render(t_vars *vars)
 		i_grd = vars->ground[i].size;
 		while (--i_grd > -1)
 		{
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->ground_xpm[i_img].img, axis.x + (i_grd * size.w), axis.y);
-			if (++i_img > 3)
-				i_img = 0;
+			i_xpm = tern((i_xpm > 2), 0, i_xpm + 1);
+			if (screen_in(vars->win_view, axis.x + (i_grd * xpm[0].size.w),
+				axis.y, xpm[0].size.w, xpm[0].size.h))
+				continue ;
+			mlx_put_image_to_window(vars->mlx, vars->win, xpm[i_xpm].img,
+				axis.x + (i_grd * xpm[0].size.w), axis.y);
+			
 		}
 	}
 }
+
