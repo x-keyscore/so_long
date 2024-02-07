@@ -6,27 +6,27 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 23:16:20 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/05 17:05:30 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/07 03:44:26 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../so_long.h"
 
-void	screen_set(t_vars *vars, int map_w, int map_h)
+void	screen_setup(t_vars *vars, int w, int h)
 {
-	t_size view;
+	t_size	view;
 
 	mlx_get_screen_size(vars->mlx, &view.w, &view.h);
-	if (map_w > view.w)
+	if (w > view.w)
 		vars->win_view.w = view.w;
 	else
-		vars->win_view.w = map_w;
-	if (map_h > view.h)
+		vars->win_view.w = w;
+	if (h > view.h)
 		vars->win_view.h = view.h;
 	else
-		vars->win_view.h = map_h;
-	vars->win_real.w = map_w;
-	vars->win_real.h = map_h;
+		vars->win_view.h = h;
+	vars->win_real.w = w;
+	vars->win_real.h = h;
 	vars->win_move.x = 0;
 	vars->win_move.y = 0;
 	vars->win_gap = vars->win_move;

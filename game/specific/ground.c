@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 07:03:41 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/05 01:47:19 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/07 03:43:10 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,19 @@
 
 void	ground_init(t_vars *vars)
 {
+	img_list_init(4, vars->ground_xpm);
 	vars->ground_len = 0;
 	vars->ground = malloc(vars->ground_len * sizeof(t_ground));
 	if (!vars->ground)
-		err(vars,  NULL, NULL, "Malloc fail: ground.\n");
+		err(vars, "Malloc fail", NULL, -1);
+}
+
+void	ground_setup(t_vars *vars)
+{
+	img_xpm_load(vars, &vars->ground_xpm[0], "./assets/stc/ground_1.xpm");
+	img_xpm_load(vars, &vars->ground_xpm[1], "./assets/stc/ground_2.xpm");
+	img_xpm_load(vars, &vars->ground_xpm[2], "./assets/stc/ground_3.xpm");
+	img_xpm_load(vars, &vars->ground_xpm[3], "./assets/stc/ground_4.xpm");
 }
 
 void	ground_add(t_vars *vars, int x, int y, int size)
@@ -25,27 +34,16 @@ void	ground_add(t_vars *vars, int x, int y, int size)
 	t_ground	new_ground;
 
 	vars->ground_len++;
-	if (vars->ground_len > 0)
+	if (vars->ground_len > 0 && vars->ground_len < INT_MAX)
 	{
 		vars->ground = realloc(vars->ground, vars->ground_len * sizeof(t_ground));
 		if (!vars->ground)
-			err(vars,  NULL, NULL, "Realloc fail: ground.\n");
+			err(vars, "Realloc fail", NULL, -1);
 	}
 	new_ground.axis.x = x;
 	new_ground.axis.y = y;
 	new_ground.size = size;
 	vars->ground[vars->ground_len - 1] = new_ground;
-}
-
-void	ground_setup(t_vars *vars)
-{
-	xpm_load(vars->mlx, &vars->ground_xpm[0], "./assets/stc/ground_1.xpm");
-	xpm_load(vars->mlx, &vars->ground_xpm[1], "./assets/stc/ground_2.xpm");
-	xpm_load(vars->mlx, &vars->ground_xpm[2], "./assets/stc/ground_3.xpm");
-	xpm_load(vars->mlx, &vars->ground_xpm[3], "./assets/stc/ground_4.xpm");
-	if (!vars->ground_xpm[0].img || !vars->ground_xpm[1].img
-	|| !vars->ground_xpm[2].img || !vars->ground_xpm[3].img)
-		err(vars, NULL, NULL, "Xpm loading fail: ground.\n");
 }
 
 int	ground_collision(t_vars *vars, t_axis pos_1, int size_1_w, int size_1_h)
@@ -94,9 +92,8 @@ void	ground_render(t_vars *vars)
 			if (screen_in(vars->win_view, axis.x + (i_grd * xpm[0].size.w),
 				axis.y, xpm[0].size.w, xpm[0].size.h))
 				continue ;
-			mlx_put_image_to_window(vars->mlx, vars->win, xpm[i_xpm].img,
+			mlx_put_image_to_window(vars->mlx, vars->win, xpm[i_xpm].ptr,
 				axis.x + (i_grd * xpm[0].size.w), axis.y);
-			
 		}
 	}
 }

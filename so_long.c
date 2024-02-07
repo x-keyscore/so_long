@@ -6,55 +6,35 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:28:57 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/04 23:43:18 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/07 04:42:24 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./so_long.h"
 
-void	free_map(char *map)
+void	vars_init(t_vars *vars)
 {
-	if (!map)
-		return ;
-	free(map);
-	map = NULL;
-}
-
-void	free_home(t_home *home)
-{
-	if (!home || !home->mlx)
-		return ;
-	if (home->win)
-	{
-		xpm_destroy_list(home->mlx, 2, home->play_xpm);
-		xpm_destroy_list(home->mlx, 2, home->exit_xpm);
-		mlx_destroy_window(home->mlx, home->win);
-		home->win = NULL;
-	}
-	mlx_destroy_display(home->mlx);
-	free(home->mlx);
-	home->mlx = NULL;
-}
-
-void	free_vars(t_vars *vars)
-{
-	if (!vars || !vars->mlx)
-		return ;
-	if (vars->win)
-	{
-		xpm_destroy_list(vars->mlx, 1, vars->star_img);
-		xpm_destroy_list(vars->mlx, 1, vars->tree_xpm);
-		xpm_destroy_list(vars->mlx, 2, vars->fish_xpm);
-		xpm_destroy_list(vars->mlx, 2, vars->light_xpm);
-		xpm_destroy_list(vars->mlx, 4, vars->ground_xpm);
-		xpm_destroy_list(vars->mlx, 2, vars->player_xpm);
-		xpm_destroy_list(vars->mlx, 2, vars->spaceship_xpm);
-		mlx_destroy_window(vars->mlx, vars->win);
-		vars->win = NULL;
-	}
-	mlx_destroy_display(vars->mlx);
-	free(vars->mlx);
 	vars->mlx = NULL;
+	vars->win = NULL;
+	vars->map = NULL;
+	vars->FPS = 0;
+	vars->FPS_start_time = time(NULL);
+	vars->FPS_frame_count = 0;
+	vars->ctrl_state = 0;
+	vars->ctrl_step = 0;
+	vars->light_on = 0;
+	bg_init(vars);
+	home_init(vars);
+	tree_init(vars);
+	fish_init(vars);
+	light_init(vars);
+	ground_init(vars);
+	player_init(vars);
+	spaceship_init(vars);
+}
+
+void	free_vars_list(t_vars *vars)
+{
 	free(vars->ground);
 	vars->ground = NULL;
 	free(vars->fish);
@@ -65,43 +45,64 @@ void	free_vars(t_vars *vars)
 	vars->tree = NULL;
 }
 
-void	err(t_vars *vars, t_home *home, char *map, char *msg)
+void	free_vars(t_vars *vars)
+{
+	if (!vars)
+		return ;
+	if (vars->map)
+		free(vars->map);
+	if (vars->mlx && vars->win)
+	{
+		img_list_destroy(vars->mlx, 1, vars->bg_img);
+		img_list_destroy(vars->mlx, 7, vars->home_xpm);
+		img_list_destroy(vars->mlx, 1, vars->tree_xpm);
+		img_list_destroy(vars->mlx, 2, vars->fish_xpm);
+		img_list_destroy(vars->mlx, 2, vars->light_xpm);
+		img_list_destroy(vars->mlx, 4, vars->ground_xpm);
+		img_list_destroy(vars->mlx, 2, vars->player_xpm);
+		img_list_destroy(vars->mlx, 2, vars->spaceship_xpm);
+		mlx_destroy_window(vars->mlx, vars->win);
+		vars->win = NULL;
+	}
+	if (vars->mlx)
+	{
+		mlx_destroy_display(vars->mlx);
+		free(vars->mlx);
+		vars->mlx = NULL;
+	}
+	free_vars_list(vars);
+}
+
+void	err(t_vars *vars, char *msg, char *info, int nbr)
 {
 	free_vars(vars);
-	free_home(home);
-	free_map(map);
 	putstr("Error\n", 2);
-	putstr(msg, 2);
+	if (msg)
+		putstr(msg, 2);
+	if (info)
+		putstr(info, 2);
+	if (nbr > -1)
+		putstr(nbrstr(nbr), 2);
+	putstr("\n", 2);
 	exit(1);
 }
 
 int	main(int argc, char **argv)
 {
 	t_vars	vars;
-	t_home	home;
+	t_size 	map_size;
 
-	vars.mlx = NULL;
-	home.mlx = NULL;
-	vars.win = NULL;
-	home.win = NULL;
 	if (argc <= 1 || argc >= 3)
-			err(NULL, NULL, NULL, "Il faut 1 argument.\n");
+			err(NULL, "Il faut 1 argument.", "./so_long [map].ber", -1);
+	vars_init(&vars);
+	parser_get_map(&vars, argv[1], &map_size);
+	game_setup(&vars, map_size);
 	while (1)
 	{
-		game_init(&vars);
-		parser_start(&vars, argv[1]);
-		home_init_and_setup(&home);
-		home_start(&home);
-		if (home.select == 1)
-		{
-			free_home(&home);
-			free_vars(&vars);
-			exit(EXIT_SUCCESS);
-		}
-		free_home(&home);
-		game_setup(&vars);
+		parser_set_value(&vars, vars.map, map_size);
 		game_start(&vars);
-		free_vars(&vars);
+		game_restart(&vars, map_size);
 	}
+	free_vars(&vars);
 	return (0);
 }

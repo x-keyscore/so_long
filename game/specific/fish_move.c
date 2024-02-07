@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fish_2.c                                           :+:      :+:    :+:   */
+/*   fish_move.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:56:55 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/04 22:57:02 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:14:18 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	fish_move(t_vars *vars)
 	i = vars->fish_len;
 	while (--i > -1)
 	{
-		vars->fish[i].velocity_x += 0.2;
-		if (vars->fish[i].velocity_x < 1)
+		vars->fish[i].mv_pix += vars->fish[i].mv_spd;
+		if (vars->fish[i].mv_pix < 1)
 			continue ;
 		fi_move = entity_move(vars, &vars->fish[i]);
-		vars->fish[i].velocity_x = 0;
+		vars->fish[i].mv_pix = 0;
 		vars->fish[i].on_dir = tern((fi_move.down), 0, 1);
 		if (!vars->fish[i].on_dir)
 			continue ;

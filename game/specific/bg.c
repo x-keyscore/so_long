@@ -1,36 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   star.c                                             :+:      :+:    :+:   */
+/*   bg.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 16:48:45 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/05 01:58:04 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/07 03:44:14 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../so_long.h"
 
-void	star_setup(t_vars *vars)
+void	bg_init(t_vars *vars)
+{
+	img_list_init(1, vars->bg_img);
+}
+
+void	bg_setup(t_vars *vars)
 {
 	int		i;
 	t_axis	pos;
 
-	vars->star_img[0].img = mlx_new_image(vars->mlx, vars->win_view.w, vars->win_view.h);
-	if (!vars->star_img[0].img)
-		err(vars, NULL, NULL, "Create new image fail: start.\n");
+	vars->bg_img[0].ptr = mlx_new_image(vars->mlx,
+		vars->win_view.w, vars->win_view.h);
+	if (!vars->bg_img[0].ptr)
+		err(vars, "Failed to create new image.", NULL, -1);
 	i = -1;
 	while (++i < 125)
 	{
 		pos.x = rand() % vars->win_view.w;
 		pos.y = rand() % vars->win_view.h;
-		mlx_pixel_put_image(vars->mlx, vars->star_img[0].img, pos.x, pos.y, 0x00FFFFFF);
+		mlx_pixel_put_image(vars->mlx, vars->bg_img[0].ptr,
+			pos.x, pos.y, 0x00FFFFFF);
 	}
-	mlx_load_image(vars->mlx, vars->star_img[0].img);
+	mlx_load_image(vars->mlx, vars->bg_img[0].ptr);
 }
 
-void	star_render(t_vars *vars)
+void	bg_render(t_vars *vars)
 {
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->star_img[0].img, 0, 0);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->bg_img[0].ptr, 0, 0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fish_1.c                                           :+:      :+:    :+:   */
+/*   fish.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:10:40 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/05 01:43:08 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/07 03:43:22 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,44 @@
 
 void	fish_init(t_vars *vars)
 {
+	img_list_init(2, vars->fish_xpm);
 	vars->fish_len = 0;
 	vars->fish = malloc(vars->fish_len * sizeof(t_entity));
 	if (!vars->fish)
-		err(vars, NULL, NULL, "Malloc fail: fish.\n");
+		err(vars, "Malloc fail", NULL, -1);
+}
+
+void	fish_setup(t_vars *vars)
+{
+	img_xpm_load(vars, &vars->fish_xpm[0], "./assets/dyn/fish_left.xpm");
+	img_xpm_load(vars, &vars->fish_xpm[1], "./assets/dyn/fish_right.xpm");
 }
 
 void	fish_add(t_vars *vars, int x, int y)
 {
 	t_entity	new_fish;
 
+	entity_init(vars, &new_fish);
 	vars->fish_len++;
-	if (vars->fish_len > 0)
+	if (vars->fish_len > 0 && vars->fish_len < INT_MAX)
 	{
 		vars->fish = realloc(vars->fish, vars->fish_len * sizeof(t_entity));
 		if (!vars->fish)
-			err(vars, NULL, NULL, "Realloc fail: fish.\n");
+			err(vars, "Realloc fail", NULL, -1);
 	}
 	new_fish.axis.x = x;
 	new_fish.axis.y = y;
-	new_fish.velocity_x = 1;
-	new_fish.velocity_y = 1;
+	new_fish.mv_spd = 0.2;
+	entity_set(vars, &new_fish, vars->fish_xpm[0].size);
 	vars->fish[vars->fish_len - 1] = new_fish;
-}
-
-void	fish_setup(t_vars *vars)
-{
-	size_t	i;
-
-	xpm_load(vars->mlx, &vars->fish_xpm[0], "./assets/dyn/fish_left.xpm");
-	xpm_load(vars->mlx, &vars->fish_xpm[1], "./assets/dyn/fish_right.xpm");
-	if (!vars->fish_xpm[0].img || !vars->fish_xpm[1].img)
-		err(vars, NULL, NULL, "Xpm loading fail: fish.\n");
-	i = 0;
-	while (vars->fish_len && i < vars->fish_len)
-	{
-		entity_setup(vars, &vars->fish[i], vars->fish_xpm[0].size);
-		i++;
-	}
 }
 
 void	fish_collision(t_vars *vars)
 {
 	t_entity	*entity;
-	t_axis	axis;
-	t_size	size;
-	int	i;
+	t_axis		axis;
+	t_size		size;
+	int			i;
 
 	entity = ctrl_get(vars);
 	axis = entity->axis;
@@ -68,7 +60,11 @@ void	fish_collision(t_vars *vars)
 	while (vars->fish_len && ++i < vars->fish_len)
 	{
 		if (overlap(axis, size, vars->fish[i].axis, vars->fish_xpm[0].size))
+		{
+			vars->home->id_msg = 5;
 			mlx_loop_end(vars->mlx);
+		}
+			
 	}
 }
 

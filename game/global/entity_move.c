@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:34:24 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/05 13:31:47 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/07 03:45:04 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,12 @@ int	entity_move_left(t_vars *vars, t_entity *entity, t_size e_size)
 			&& (g_axis.y + g_size.w > e_axis->y)
 			&& (dist < g_axis.x + (g_nbr * g_size.w)))
 			dist = g_axis.x + (g_nbr * g_size.w);
-		//mlx_pixel_put(vars->mlx, vars->win, dist, e_axis->y, 0x00e81212);
 	}
-	if (e_axis->x - entity->velocity_x > dist)
-		e_axis->x -= (int)entity->velocity_x;
+	if (e_axis->x - entity->mv_pix > dist)
+		e_axis->x -= (int)entity->mv_pix;
 	else
 		e_axis->x = dist;
-	return (tern((e_axis->x - entity->velocity_x > dist), 1, 0));
+	return (tern((e_axis->x - entity->mv_pix > dist), 1, 0));
 }
 
 int	entity_move_right(t_vars *vars, t_entity *entity, t_size e_size)
@@ -63,15 +62,12 @@ int	entity_move_right(t_vars *vars, t_entity *entity, t_size e_size)
 			&& (g_axis.y + g_size.w > e_axis->y)
 			&& (dist > g_axis.x - e_size.w))
 			dist = g_axis.x - e_size.w;
-		//mlx_pixel_put(vars->mlx, vars->win, dist + (e_size.w - 1), e_axis->y, 0x0052ec49);
 	}
-	//if (((vars->win_gap.x * -1 + vars->win_view.w) > vars->win_real.w) - e_size.w && e_axis->x >= vars->win_view.w - e_size.w)
-	//	e_axis->x = vars->win_view.w - e_size.w;
-	if (e_axis->x + entity->velocity_x < dist)
-		e_axis->x += (int)entity->velocity_x;
+	if (e_axis->x + entity->mv_pix < dist)
+		e_axis->x += (int)entity->mv_pix;
 	else
 		e_axis->x = dist;
-	return (tern((e_axis->x + entity->velocity_x < dist), 1, 0));
+	return (tern((e_axis->x + entity->mv_pix < dist), 1, 0));
 }
 
 int	entity_move_up(t_vars *vars, t_entity *entity, t_size e_size)
@@ -96,11 +92,11 @@ int	entity_move_up(t_vars *vars, t_entity *entity, t_size e_size)
 			&& (dist < g_axis.y + g_size.h))
 			dist = g_axis.y + g_size.h;
 	}
-	if (e_axis->y - entity->velocity_y > dist)
-		e_axis->y -= (int)entity->velocity_y;
+	if (e_axis->y - entity->mv_pix > dist)
+		e_axis->y -= (int)entity->mv_pix;
 	else
 		e_axis->y = dist;
-	return (tern((e_axis->y - entity->velocity_y > dist), 1, 0));
+	return (tern((e_axis->y - entity->mv_pix > dist), 1, 0));
 }
 
 int	entity_move_gravity(t_vars *vars, t_entity *entity, t_size e_size)
@@ -124,16 +120,16 @@ int	entity_move_gravity(t_vars *vars, t_entity *entity, t_size e_size)
 			&& (dist > g_axis.y - e_size.h))
 			dist = g_axis.y - e_size.h;
 	}
-	if (e_axis->y + entity->velocity_y < dist)
-		e_axis->y += entity->velocity_y;
+	if (e_axis->y + entity->mv_pix < dist)
+		e_axis->y += entity->mv_pix;
 	else
 		e_axis->y = dist;
-	return (tern((e_axis->y + entity->velocity_y < dist), 1, 0));
+	return (tern((e_axis->y + entity->mv_pix < dist), 1, 0));
 }
 
 t_move	entity_move(t_vars *vars, t_entity *entity)
 {
-	t_move move;
+	t_move	move;
 
 	move.left = 0;
 	move.right = 0;
