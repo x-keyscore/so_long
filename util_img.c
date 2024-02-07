@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:39:08 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 03:48:03 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:51:22 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ void	img_xpm_load(t_vars *vars, t_img *img, char *file_path)
 	img->ptr = mlx_xpm_file_to_image(vars->mlx, vars->win,
 		(char *)file_path, &img->size.w, &img->size.h);
 	if (!img->ptr)
-		err(vars, "Image loading fail of :", file_path, -1);
+		err(vars, "Xpm loading fail of :", file_path, -1);
 }
