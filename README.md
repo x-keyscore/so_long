@@ -3,6 +3,9 @@
 ### Compilation
 
 ```
+git clone https://github.com/X-Keyscore/so_long.git
+cd ./so_long
+git clone https://github.com/X-Keyscore/minilibx-linux-v2.git
 make
 ./so_long [your map].ber
 ```
