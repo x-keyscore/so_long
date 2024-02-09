@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 22:56:55 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/06 15:14:18 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:36:39 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	fish_move(t_vars *vars)
 	t_move	fi_move;
 	t_axis	tmp_a;
 	int		i;
-	int		j;
 
 	i = vars->fish_len;
 	while (--i > -1)

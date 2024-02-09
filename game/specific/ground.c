@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 07:03:41 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 03:43:10 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:15:21 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	ground_add(t_vars *vars, int x, int y, int size)
 	vars->ground_len++;
 	if (vars->ground_len > 0 && vars->ground_len < INT_MAX)
 	{
-		vars->ground = realloc(vars->ground, vars->ground_len * sizeof(t_ground));
+		vars->ground = realloc(vars->ground,
+				vars->ground_len * sizeof(t_ground));
 		if (!vars->ground)
 			err(vars, "Realloc fail", NULL, -1);
 	}
@@ -60,9 +61,9 @@ int	ground_collision(t_vars *vars, t_axis pos_1, int size_1_w, int size_1_h)
 		pos_2 = vars->ground[i].axis;
 		size = vars->ground[i].size;
 		if ((pos_1.x < pos_2.x + (size * xpm_2.size.w))
-		&& (pos_1.x + size_1_w > pos_2.x)
-		&& (pos_1.y < pos_2.y + xpm_2.size.h)
-		&& (pos_1.y + size_1_h > pos_2.y))
+			&& (pos_1.x + size_1_w > pos_2.x)
+			&& (pos_1.y < pos_2.y + xpm_2.size.h)
+			&& (pos_1.y + size_1_h > pos_2.y))
 			return (1);
 		i++;
 	}
@@ -90,11 +91,10 @@ void	ground_render(t_vars *vars)
 		{
 			i_xpm = tern((i_xpm > 2), 0, i_xpm + 1);
 			if (screen_in(vars->win_view, axis.x + (i_grd * xpm[0].size.w),
-				axis.y, xpm[0].size.w, xpm[0].size.h))
+					axis.y, xpm[0].size))
 				continue ;
 			mlx_put_image_to_window(vars->mlx, vars->win, xpm[i_xpm].ptr,
 				axis.x + (i_grd * xpm[0].size.w), axis.y);
 		}
 	}
 }
-

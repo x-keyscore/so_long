@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:34:24 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 03:45:04 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:10:23 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	entity_move_left(t_vars *vars, t_entity *entity, t_size e_size)
 {
 	int		i;
 	int		dist;
-	int		g_nbr;
 	t_axis	*e_axis;
 	t_axis	g_axis;
 	t_size	g_size;
@@ -28,12 +27,11 @@ int	entity_move_left(t_vars *vars, t_entity *entity, t_size e_size)
 	while (--i > -1)
 	{
 		g_axis = vars->ground[i].axis;
-		g_nbr = vars->ground[i].size;
 		if (((g_axis.x + (vars->ground[i].size * g_size.w)) - 1 < e_axis->x)
 			&& (g_axis.y - e_size.h < e_axis->y)
 			&& (g_axis.y + g_size.w > e_axis->y)
-			&& (dist < g_axis.x + (g_nbr * g_size.w)))
-			dist = g_axis.x + (g_nbr * g_size.w);
+			&& (dist < g_axis.x + (vars->ground[i].size * g_size.w)))
+			dist = g_axis.x + (vars->ground[i].size * g_size.w);
 	}
 	if (e_axis->x - entity->mv_pix > dist)
 		e_axis->x -= (int)entity->mv_pix;
@@ -74,7 +72,6 @@ int	entity_move_up(t_vars *vars, t_entity *entity, t_size e_size)
 {
 	int		i;
 	int		dist;
-	int		g_nbr;
 	t_axis	*e_axis;
 	t_axis	g_axis;
 	t_size	g_size;

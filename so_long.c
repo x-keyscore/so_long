@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:28:57 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 04:42:24 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:23:33 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	vars_init(t_vars *vars)
 	vars->mlx = NULL;
 	vars->win = NULL;
 	vars->map = NULL;
-	vars->FPS = 0;
-	vars->FPS_start_time = time(NULL);
-	vars->FPS_frame_count = 0;
+	vars->fps = 0;
+	vars->fps_start_time = time(NULL);
+	vars->fps_frame_count = 0;
 	vars->ctrl_state = 0;
 	vars->ctrl_step = 0;
 	vars->light_on = 0;
@@ -73,6 +73,11 @@ void	free_vars(t_vars *vars)
 	free_vars_list(vars);
 }
 
+/**
+* @param msg strings or NULL
+* @param info strings or NULL
+* @param nbr number or -1 if not used
+*/
 void	err(t_vars *vars, char *msg, char *info, int nbr)
 {
 	free_vars(vars);
@@ -90,16 +95,16 @@ void	err(t_vars *vars, char *msg, char *info, int nbr)
 int	main(int argc, char **argv)
 {
 	t_vars	vars;
-	t_size 	map_size;
+	t_size	map_size;
 
 	if (argc <= 1 || argc >= 3)
-			err(NULL, "Il faut 1 argument.", "./so_long [map].ber", -1);
+		err(NULL, "Il faut 1 argument.", "./so_long [map].ber", -1);
 	vars_init(&vars);
 	parser_get_map(&vars, argv[1], &map_size);
 	game_setup(&vars, map_size);
+	parser_set_value(&vars, vars.map, map_size);
 	while (1)
 	{
-		parser_set_value(&vars, vars.map, map_size);
 		game_start(&vars);
 		game_restart(&vars, map_size);
 	}

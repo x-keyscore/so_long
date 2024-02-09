@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:10:40 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 03:43:22 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:36:23 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	fish_add(t_vars *vars, int x, int y)
 {
 	t_entity	new_fish;
 
-	entity_init(vars, &new_fish);
+	entity_init(&new_fish);
 	vars->fish_len++;
 	if (vars->fish_len > 0 && vars->fish_len < INT_MAX)
 	{
@@ -41,7 +41,7 @@ void	fish_add(t_vars *vars, int x, int y)
 	}
 	new_fish.axis.x = x;
 	new_fish.axis.y = y;
-	new_fish.mv_spd = 0.2;
+	new_fish.mv_spd = SPEED_FISH;
 	entity_set(vars, &new_fish, vars->fish_xpm[0].size);
 	vars->fish[vars->fish_len - 1] = new_fish;
 }
@@ -56,19 +56,18 @@ void	fish_collision(t_vars *vars)
 	entity = ctrl_get(vars);
 	axis = entity->axis;
 	size = entity->size;
-	i = -1;
-	while (vars->fish_len && ++i < vars->fish_len)
+	i = vars->fish_len;
+	while (--i > -1)
 	{
 		if (overlap(axis, size, vars->fish[i].axis, vars->fish_xpm[0].size))
 		{
 			vars->home->id_msg = 5;
 			mlx_loop_end(vars->mlx);
 		}
-			
 	}
 }
 
-void 	fish_render(t_vars *vars)
+void	fish_render(t_vars *vars)
 {
 	int	i;
 

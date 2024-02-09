@@ -6,14 +6,13 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:40:41 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 03:28:21 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:12:10 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../so_long.h"
 
-
-int key_press(int keycode, t_vars *vars)
+int	key_press(int keycode, t_vars *vars)
 {
 	t_entity	*entity;
 
@@ -42,7 +41,7 @@ int key_press(int keycode, t_vars *vars)
 	return (0);
 }
 
-int key_release(int keycode, t_vars *vars)
+int	key_release(int keycode, t_vars *vars)
 {
 	t_entity	*entity;
 

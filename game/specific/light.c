@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 06:40:49 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 03:42:24 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:16:19 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	light_add(t_vars *vars, int x, int y)
 	vars->light[vars->light_len - 1] = new_light;
 }
 
-void    light_collision(t_vars *vars, t_axis axis, t_size size)
+void	light_collision(t_vars *vars, t_axis axis, t_size size)
 {
 	int	i;
-	
+
 	i = vars->light_len;
 	while (--i > -1)
 	{
@@ -69,11 +69,11 @@ void	light_render(t_vars *vars)
 	while (--i > -1)
 	{
 		if (vars->light[i].on_active)
-			 vars->light_on++;
+			vars->light_on++;
 		vars->light[i].axis.x += vars->win_move.x;
 		vars->light[i].axis.y += vars->win_move.y;
 		if (screen_in(vars->win_view, vars->light[i].axis.x,
-			vars->light[i].axis.y, light.w, light.h))
+				vars->light[i].axis.y, light))
 			continue ;
 		mlx_put_image_to_window(vars->mlx, vars->win,
 			vars->light_xpm[vars->light[i].on_active].ptr,

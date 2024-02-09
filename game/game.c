@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:47:01 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 04:57:52 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:02:56 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	game_setup(t_vars *vars, t_size	map_size)
 	vars->mlx = mlx_init();
 	screen_setup(vars, (map_size.w - 2) * BASE, (map_size.h - 2) * BASE);
 	vars->win = mlx_new_window(vars->mlx, vars->win_view.w, vars->win_view.h,
-		"so_long");
+			"so_long");
 	mlx_string_put(vars->mlx, vars->win, 35, 40, 0x00FFFFFF, "Loading...");
 	bg_setup(vars);
 	home_setup(vars);
@@ -32,8 +32,8 @@ void	game_setup(t_vars *vars, t_size	map_size)
 void	game_start(t_vars *vars)
 {
 	mlx_hook(vars->win, 17, 0, btn_close, vars);
-	mlx_hook(vars->win, 2, 1L<<0, key_press, vars);
-	mlx_hook(vars->win, 3, 1L<<1, key_release, vars);
+	mlx_hook(vars->win, 2, 1L << 0, key_press, vars);
+	mlx_hook(vars->win, 3, 1L << 1, key_release, vars);
 	mlx_loop_hook(vars->mlx, game_loop, vars);
 	mlx_do_key_autorepeatoff(vars->mlx);
 	mlx_do_sync(vars->mlx);
@@ -54,6 +54,7 @@ void	game_restart(t_vars *vars, t_size map_size)
 	vars->tree_len = 0;
 	vars->light_len = 0;
 	vars->ground_len = 0;
+	parser_set_value(vars, vars->map, map_size);
 }
 
 void	game_exit(t_vars *vars, char *msg)

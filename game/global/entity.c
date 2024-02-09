@@ -6,13 +6,13 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:27:29 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 03:44:48 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:33:21 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../so_long.h"
 
-void    entity_init(t_vars *vars, t_entity *entity)
+void	entity_init(t_entity *entity)
 {
 	entity->on_display = 0;
 	entity->axis.x = 0;
@@ -26,7 +26,7 @@ void    entity_init(t_vars *vars, t_entity *entity)
 	entity->mv_pix = 1;
 }
 
-void    entity_set(t_vars *vars, t_entity *entity, t_size size)
+void	entity_set(t_vars *vars, t_entity *entity, t_size size)
 {
 	entity->on_display = 1;
 	entity->on_dir = 0;
@@ -64,7 +64,8 @@ void	entity_render(t_vars *vars, t_entity *entity, t_img *xpm)
 		return ;
 	entity->axis.x += vars->win_move.x;
 	entity->axis.y += vars->win_move.y;
-	if (screen_in(vars->win_view, entity->axis.x, entity->axis.y, entity->size.w, entity->size.h))
+	if (screen_in(vars->win_view, entity->axis.x, entity->axis.y, entity->size))
 		return ;
-	mlx_put_image_to_window(vars->mlx, vars->win, xpm[entity->dir].ptr, entity->axis.x, entity->axis.y);
+	mlx_put_image_to_window(vars->mlx, vars->win, xpm[entity->dir].ptr,
+		entity->axis.x, entity->axis.y);
 }

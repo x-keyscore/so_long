@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:23:15 by anraymon          #+#    #+#             */
-/*   Updated: 2024/02/07 03:47:25 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/02/09 01:01:18 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	map_ground_border(t_vars *vars, char *map, t_size size)
 	while (map[i])
 	{
 		if ((!po.y || po.y + 1 == size.h || !po.x || po.x + 1 == size.w)
-		&& map[i] != '\n' && map[i] != CHAR_WALL)
+			&& map[i] != '\n' && map[i] != CHAR_WALL)
 			err(vars, "Invalid borders.\n", "Line : ", po.y);
 		po.x = tern((map[i] == '\n' && ++po.y), 0, po.x + 1);
 		i++;
@@ -99,7 +99,7 @@ void	map_ground_platform(t_vars *vars, char *map, t_size size)
 	while (map[++i])
 	{
 		if ((po.y && po.y + 1 != size.h && po.x && po.x + 1 != size.w)
-		&& map[i] != '\n' && map[i] == CHAR_WALL)
+			&& map[i] != '\n' && map[i] == CHAR_WALL)
 		{
 			if (!p++)
 				gr = po;

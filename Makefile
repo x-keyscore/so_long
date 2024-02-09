@@ -6,13 +6,13 @@
 #    By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/09 15:32:20 by anraymon          #+#    #+#              #
-#    Updated: 2024/02/07 04:05:09 by anraymon         ###   ########.fr        #
+#    Updated: 2024/02/09 01:32:49 by anraymon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME   = so_long
 CC     = gcc
-CFLAGS = -g #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 MLX = minilibx-linux-v2/libmlx.a
 SRCS   = so_long.c \
 		util.c \
@@ -22,6 +22,11 @@ SRCS   = so_long.c \
 		parser/map_2.c \
 		game/game.c \
 		game/game_loop.c \
+		game/global/ctrl.c \
+		game/global/entity.c \
+		game/global/screen.c \
+		game/global/entity_move.c \
+		game/global/key_and_btn.c \
 		game/specific/bg.c \
 		game/specific/home.c \
 		game/specific/scoreboard.c \
@@ -32,11 +37,7 @@ SRCS   = so_long.c \
 		game/specific/ground.c \
 		game/specific/player.c \
 		game/specific/spaceship.c \
-		game/global/ctrl.c \
-		game/global/entity.c \
-		game/global/screen.c \
-		game/global/entity_move.c \
-		game/global/key_and_btn.c \
+		
 
 OBJS = ${SRCS:.c=.o}
 
