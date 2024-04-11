@@ -6,13 +6,13 @@
 #    By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/09 15:32:20 by anraymon          #+#    #+#              #
-#    Updated: 2024/02/09 01:32:49 by anraymon         ###   ########.fr        #
+#    Updated: 2024/04/11 16:18:50 by anraymon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME   = so_long
 CC     = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 MLX = minilibx-linux-v2/libmlx.a
 SRCS   = so_long.c \
 		util.c \
