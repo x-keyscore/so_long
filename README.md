@@ -1,6 +1,6 @@
 # so_long
 
-### Compilation
+### Install
 
 ```
 git clone https://github.com/x-keyscore/so_long.git
